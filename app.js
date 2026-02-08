@@ -623,7 +623,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.updateActivityName = function (dayId, idx, val) {
         if (window.itineraryState[dayId].activities[idx]) {
             window.itineraryState[dayId].activities[idx].name = val;
-            localStorage.setItem('crc_itinerary_state', JSON.stringify(window.itineraryState));
+            localStorage.setItem('steph_itinerary_state', JSON.stringify(window.itineraryState));
         }
     };
 
@@ -646,7 +646,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.updateRestaurantName = function (dayId, idx, val) {
         if (window.itineraryState[dayId].restaurants[idx]) {
             window.itineraryState[dayId].restaurants[idx].name = val;
-            localStorage.setItem('crc_itinerary_state', JSON.stringify(window.itineraryState));
+            localStorage.setItem('steph_itinerary_state', JSON.stringify(window.itineraryState));
         }
     };
 
@@ -669,7 +669,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         window.itineraryState[dayId].accommodation[field] = val;
         renderDetailsGrid(); // Re-render to update Waze link
-        localStorage.setItem('crc_itinerary_state', JSON.stringify(window.itineraryState));
+        localStorage.setItem('steph_itinerary_state', JSON.stringify(window.itineraryState));
     };
 
     window.updateAccommodationDuration = function (dayId, val) {
@@ -722,7 +722,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         renderDetailsGrid();
-        localStorage.setItem('crc_itinerary_state', JSON.stringify(window.itineraryState));
+        localStorage.setItem('steph_itinerary_state', JSON.stringify(window.itineraryState));
     };
 
     window.deleteRestaurant = function (dayId, idx) {
