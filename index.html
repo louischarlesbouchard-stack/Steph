@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Steph - Costa Rica 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Outfit', 'sans-serif'], serif: ['Playfair Display', 'serif'] },
+                    colors: {
+                        'cr-green': '#2d5a47', 'cr-gold': '#f2cc8f', 'cr-blue': '#1e6091', 'cr-orange': '#ea580c',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- App Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+</head>
+
+<body class="bg-stone-50 text-stone-800">
+    <!-- TIER 1: FLUID MOSAIC HEADER -->
+    <!-- FIRST PAGE REMOVED PER USER REQUEST -->
+
+    <div id="itinerary-start"></div> <!-- Scroll Anchor -->
+
+    <!-- SLIDESHOW MODAL -->
+    <div id="slideshow-modal"
+        class="fixed inset-0 z-50 bg-black/95 hidden flex flex-col justify-center items-center backdrop-blur-xl">
+        <button onclick="window.closeSlideshow()"
+            class="absolute top-4 right-4 text-white/50 hover:text-white text-4xl z-50 transition-colors">&times;</button>
+
+        <div class="relative w-full max-w-5xl h-[80vh] flex items-center justify-center">
+            <button onclick="window.prevSlide()"
+                class="absolute left-4 text-white/50 hover:text-cr-gold text-5xl z-10 p-4 transition-colors"><i
+                    class="fas fa-chevron-left"></i></button>
+
+            <img id="slideshow-img" src=""
+                class="max-h-full max-w-full object-contain shadow-2xl rounded-lg border border-white/10">
+
+            <button onclick="window.nextSlide()"
+                class="absolute right-4 text-white/50 hover:text-cr-gold text-5xl z-10 p-4 transition-colors"><i
+                    class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <div class="mt-4 text-stone-400 font-mono text-sm tracking-widest">
+            <span id="slide-counter">1 / 100</span>
+        </div>
+    </div>
+
+    <!-- UNDERGROUND INFO MODAL -->
+    <div id="underground-modal"
+        class="fixed inset-0 z-[9999] bg-stone-950/95 hidden flex items-center justify-center backdrop-blur-2xl p-4 md:p-10">
+        <div
+            class="bg-stone-900 border border-emerald-500/20 rounded-[2.5rem] w-full max-w-[95%] h-[90vh] flex flex-col shadow-[0_0_100px_rgba(45,90,71,0.2)] overflow-hidden relative">
+
+            <!-- Tropical Decorative Accents -->
+            <div
+                class="absolute -top-24 -right-24 w-64 h-64 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none">
+            </div>
+            <div
+                class="absolute -bottom-24 -left-24 w-64 h-64 bg-cr-gold/10 rounded-full blur-[80px] pointer-events-none">
+            </div>
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-white/10 flex justify-between items-center bg-stone-950/50">
+                <div class="flex items-center gap-4">
+                    <div
+                        class="w-12 h-12 bg-emerald-500 rounded-2xl flex items-center justify-center text-stone-900 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+                        <i class="fas fa-user-secret text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-serif font-bold text-white uppercase tracking-tighter">Underground CR
+                            Guide</h3>
+                        <p class="text-xs text-emerald-500/80 font-bold uppercase tracking-[0.2em]">Local Secrets &
+                            Hidden Gems</p>
+                    </div>
+                </div>
+                <button onclick="window.closeUndergroundInfo()"
+                    class="text-white/30 hover:text-white text-3xl transition-colors">&times;</button>
+            </div>
+
+            <!-- Modal Content (Scrollable) -->
+            <div id="underground-content"
+                class="p-8 overflow-y-auto custom-scroll space-y-8 bg-stone-900/50 text-stone-300">
+                <!-- JS Injected Content -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 border-t border-white/5 bg-stone-950/20 text-center">
+                <p class="text-[10px] text-stone-600 uppercase tracking-widest font-black">Pura Vida • Explorations
+                    Secrètes</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SETTINGS MODAL -->
+
+
+    <!-- TIER 2: ITINERARY CARDS -->
+    <div class="bg-stone-100 border-y-4 border-white shadow-inner">
+        <div class="container mx-auto max-w-full px-4 py-8">
+            <div
+                class="flex flex-col lg:flex-row h-auto lg:h-[860px] bg-white rounded-xl shadow-lg border border-stone-100 overflow-hidden">
+
+                <!-- COL 1: MAP (70%) -->
+                <div class="flex flex-col w-full lg:w-[82%] h-[400px] lg:h-full relative bg-stone-100">
+                    <div id="main-map" class="flex-grow z-0 bg-stone-200 relative w-full h-full">
+                        <!-- Leaflet Map -->
+                    </div>
+                </div>
+
+                <!-- COL 2: COMBINED SIDEBAR (30%) -->
+                <div
+                    class="w-full lg:w-[18%] bg-white z-10 flex flex-col h-auto lg:h-full border-l border-r border-stone-200 overflow-hidden">
+
+                    <!-- TABBED HEADER -->
+                    <div class="sticky top-0 bg-white z-20 shadow-sm border-b border-stone-100 flex-shrink-0">
+                        <div class="p-3 flex justify-between items-center">
+                            <!-- TABS (Left - Desktop Only) -->
+                            <div class="hidden lg:flex items-center gap-1 bg-stone-100 p-1 rounded-lg">
+                                <button id="tab-btn-itinerary" onclick="window.switchSidebarTab('itinerary')"
+                                    class="w-12 h-10 flex items-center justify-center rounded-md transition-all bg-white text-stone-900 shadow-sm border border-stone-200">
+                                    <i class="fas fa-list-ul text-xl"></i>
+                                </button>
+                                <button id="tab-btn-routes" onclick="window.switchSidebarTab('routes')"
+                                    class="w-12 h-10 flex items-center justify-center rounded-md transition-all text-stone-400 hover:text-stone-600">
+                                    <i class="fas fa-route text-xl"></i>
+                                </button>
+                            </div>
+
+                            <!-- TITLE (Centered) -->
+                            <div class="flex-grow flex justify-center">
+                                <h1 id="sidebar-title"
+                                    class="font-serif font-black text-3xl text-stone-800 tracking-tight text-center">
+                                    Itinéraire
+                                </h1>
+                            </div>
+                        </div>
+
+                        <!-- SUB-HEADER: CONTROLS (Itinerary Mode) -->
+                        <div id="header-controls-itinerary"
+                            class="px-3 pb-3 flex justify-center items-center border-t border-stone-50 pt-3">
+                            <div class="text-sm font-black text-stone-700 flex items-center gap-3">
+                                <span><i class="fas fa-road text-stone-400 text-xs mr-1"></i><span id="kpi-total-km">--
+                                        km</span></span>
+                                <span class="text-stone-300">•</span>
+                                <span><i class="fas fa-clock text-stone-400 text-xs mr-1"></i><span
+                                        id="kpi-total-time">-- h</span></span>
+                                <span class="text-stone-300">•</span>
+                                <span id="day-count-badge"
+                                    class="text-xs font-bold text-white bg-cr-orange px-2 py-0.5 rounded-full">19
+                                    J</span>
+                            </div>
+                        </div>
+
+                        <!-- SUB-HEADER: STATS (Route Mode - Hidden on mobile if stacking) -->
+                        <div id="header-controls-routes"
+                            class="hidden lg:hidden px-3 pb-2 border-t border-stone-50 pt-2 bg-stone-50">
+                            <div class="grid grid-cols-2 gap-2 text-center text-stone-600">
+                                <div>
+                                    <span class="text-[9px] uppercase tracking-widest font-bold">Total Km</span>
+                                    <div class="text-xl font-black font-serif text-stone-800" id="stat-panel-km">0</div>
+                                </div>
+                                <div>
+                                    <span class="text-[9px] uppercase tracking-widest font-bold">Heures</span>
+                                    <div class="text-xl font-black font-serif text-stone-800" id="stat-panel-time">0
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CONTENT: ITINERARY LIST -->
+                    <div id="tab-content-itinerary"
+                        class="flex-shrink-0 lg:flex-1 overflow-y-auto custom-scroll p-1 space-y-0 bg-stone-50 max-h-[500px] lg:max-h-none min-h-0">
+                        <div id="summary-feed">
+                            <!-- JS Injected Cards -->
+                        </div>
+                    </div>
+
+                    <!-- CONTENT: ROUTE TABLE -->
+                    <div id="tab-content-routes"
+                        class="hidden lg:hidden lg:flex-1 overflow-y-auto custom-scroll p-2 space-y-2 bg-stone-50 max-h-[500px] lg:max-h-none min-h-0">
+                        <div class="lg:hidden p-2 border-b border-stone-200 bg-white">
+                            <h3
+                                class="font-serif font-black text-xl text-stone-800 text-center uppercase tracking-tight">
+                                Trajets</h3>
+                        </div>
+                        <div id="route-table" class="space-y-2">
+                            <!-- JS Injected Route Segments -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RICH CARDS & BUDGET REMOVED PER USER REQUEST -->
+
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="data.js?v=2"></script>
+    <script src="budget.js?v=2"></script>
+    <script src="app.js?v=2"></script>
+</body>
+
+</html>

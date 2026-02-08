@@ -1,0 +1,454 @@
+/* BASE STYLES & MOSAIC */
+.mosaic-container {
+    column-count: 2;
+    column-gap: 8px;
+    padding: 8px;
+}
+
+@media (min-width: 640px) {
+    .mosaic-container {
+        column-count: 3;
+        /* Bigger images */
+    }
+}
+
+@media (min-width: 1024px) {
+    .mosaic-container {
+        column-count: 5;
+        /* Reduced density for bigger images */
+    }
+}
+
+
+.mosaic-item {
+    break-inside: avoid;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.mosaic-item img {
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+    transition: transform 0.5s ease;
+}
+
+.mosaic-item:hover img {
+    transform: scale(1.05);
+}
+
+/* CUSTOM SCROLLBAR for Itinerary List */
+.custom-scroll {
+    -webkit-overflow-scrolling: touch;
+}
+
+.custom-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+    background: #f5f5f4;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+    background: #d6d3d1;
+    border-radius: 3px;
+}
+
+.leaflet-tooltip.custom-tooltip {
+    background-color: white;
+    border: 1px solid #1e6091;
+    color: #1e6091;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    padding: 2px 6px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.poi-marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    color: white;
+    font-size: 14px;
+    transition: transform 0.2s;
+}
+
+.poi-marker:hover {
+    transform: scale(1.2);
+    z-index: 9999 !important;
+}
+
+/* Hide Leaflet routing control container (blank box) */
+.leaflet-routing-container {
+    display: none !important;
+}
+
+.bg-waterfall {
+    background: #0ea5e9;
+}
+
+.bg-beach {
+    background: #eab308;
+}
+
+.bg-activity {
+    background: #ec4899;
+}
+
+.bg-food {
+    background: #f97316;
+}
+
+.bg-park {
+    background: #16a34a;
+}
+
+/* Mosaic Styles */
+.mosaic-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 200px);
+    gap: 0.5rem;
+}
+
+.mosaic-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+}
+
+/* Hero Section (V6) */
+.hero-bg {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(28, 25, 23, 1)), url('https://images.unsplash.com/photo-1590424765063-4416194b5f92?auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.scroll-btn {
+    position: absolute;
+    bottom: 40px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-10px);
+    }
+
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.mosaic-item.large {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.mosaic-item.wide {
+    grid-column: span 2;
+}
+
+/* Marker Refinements */
+/* Marker Refinements V6 */
+.black-marker-oval {
+    background: #000;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 9999px;
+    /* Oval */
+    padding: 0 4px;
+    /* Reduced Padding */
+    font-size: 10px;
+    /* Reduced Font */
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    height: 16px;
+    /* Reduced Height (was 24px) */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.permanent-label {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    box-shadow: none;
+    color: #000;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    text-transform: uppercase;
+    padding: 0 4px;
+    margin-left: 2px !important;
+    /* Spacing from dot */
+}
+
+/* City & Beach Label Styles */
+/* City & Beach Label Styles */
+.leaflet-tooltip.city-label {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    /* Slightly larger */
+    color: #000 !important;
+    white-space: nowrap;
+    text-shadow: 2px 2px 0px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+}
+
+.leaflet-tooltip.beach-label {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    color: #000 !important;
+    white-space: nowrap;
+    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff;
+    /* Lighter outline */
+}
+
+.city-label::before,
+.beach-label::before {
+    display: none !important;
+}
+
+.city-label sup {
+    font-size: 9px;
+    font-weight: 900;
+    margin-left: 2px;
+    color: #ea580c;
+    /* Orange-600 */
+    vertical-align: super;
+    text-shadow: none;
+    /* No shadow for the numbers to keep them crisp */
+}
+
+.city-dot {
+    background-color: #000;
+    border: 2px solid white;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    width: 12px;
+    height: 12px;
+}
+
+.background-dot {
+    background-color: #78716c;
+    /* Stone-500 */
+    border: 1px solid white;
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    width: 8px;
+    height: 8px;
+}
+
+.leaflet-tooltip.background-label {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    color: #57534e !important;
+    /* Stone-600 */
+    white-space: nowrap;
+    text-shadow: 1px 1px 0 #fff;
+    text-transform: capitalize;
+    /* Ensure Title Case */
+}
+
+.background-label::before {
+    display: none !important;
+}
+
+.beach-dot {
+    background-color: #3b82f6;
+    /* Blue-500 */
+    border: 1px solid white;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    width: 8px;
+    /* Small dot */
+    height: 8px;
+}
+
+.region-label {
+    display: none !important;
+    color: #93c5fd !important;
+    /* Blue-300 (Lighter, subtler) */
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    /* Reduced opacity */
+    text-shadow: none;
+    /* Removed heavy shadow */
+    pointer-events: none;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.leaflet-tooltip-left.permanent-label::before {
+    border-left-color: transparent;
+}
+
+.leaflet-tooltip-right.permanent-label::before {
+    border-right-color: transparent;
+}
+
+.legend-control {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    border: 1px solid #e5e5e5;
+    min-width: 120px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.legend-item:last-child {
+    margin-bottom: 0;
+}
+
+.legend-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    color: white;
+}
+
+/* Compact Budget Styles */
+.compact-input {
+    width: 50px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px dotted #a8a29e;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    text-align: right;
+    color: #ea580c;
+    /* Orange for better visibility */
+    font-weight: 700;
+    padding: 0;
+    transition: all 0.2s;
+}
+
+.compact-input:focus,
+.compact-input:not(:placeholder-shown) {
+    border-bottom-style: solid;
+    border-bottom-color: #ea580c;
+    color: #c2410c;
+    /* Darker orange on focus */
+}
+
+/* Remove number spinners */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.activity-line {
+    margin-bottom: 2px;
+    line-height: 1.4;
+}
+
+.activity-line:hover .compact-input {
+    border-bottom-color: #ea580c;
+}
+
+/* Hide Leaflet Routing Machine UI if present */
+.leaflet-routing-container,
+.leaflet-routing-machine,
+.leaflet-routing-alt,
+.leaflet-routing-alternatives-container {
+    display: none !important;
+}
+
+/* Smoother map tiles */
+.leaflet-tile {
+    image-rendering: -webkit-optimize-contrast;
+}
+
+.leaflet-container {
+    background: #f5f5f4 !important;
+}
+
+/* BUDGET REDESIGN */
+.budget-card {
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.budget-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.budget-bar-segment {
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.budget-bar-segment:hover {
+    filter: brightness(1.2);
+    z-index: 10;
+}
+
+/* AUTOMATED VALUE STYLING */
+.auto-estimate-input {
+    color: #3b82f6 !important;
+    /* Blue text */
+    font-weight: bold;
+    background-color: rgba(59, 130, 246, 0.1) !important;
+    border-color: rgba(59, 130, 246, 0.3) !important;
+}
+
+.auto-estimate-input:focus {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5) !important;
+}
