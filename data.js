@@ -4,7 +4,7 @@
 
 // Photo helper (reusing generic for now or local placeholders)
 const p = (city, count, start = 1) => {
-    return Array.from({ length: count }, (_, i) => `https://louischarlesbouchard-stack.github.io/costa-rica-2026/Photos/Photos/${city} (${i + start}).png`); // Point to main repo photos
+    return []; // No photos per user request
 };
 
 // Generic coordinates for key locations
